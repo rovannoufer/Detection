@@ -13,7 +13,7 @@ function Header() {
          <div className='mt-5'> 
              <NavLink to={'/detect'} className='mr-5 p-2'> Object Detection </NavLink>
               <NavLink  to={'/pose'} className=' mr-5 p-2'> Pose Estimation </NavLink>
-              <NavLink className=' mr-5 p-2'> Home </NavLink>
+              <NavLink  to={'/handpose'}  className=' mr-5 p-2'> Hand Pose </NavLink>
               <NavLink className=' mr-5 p-2'> Home </NavLink>
          </div>
 
