@@ -12,7 +12,7 @@ function Detect() {
   const canvasRef = useRef(null);
  
   const runCoco = async () => {
-    // console.log(webcamRef)
+    
     const net = await cocossd.load();
   
     setInterval(() => {
@@ -21,7 +21,7 @@ function Detect() {
   };
 
   const detect = async (net) => {
-    console.log(webcamRef.current);
+
     
     if (
       typeof webcamRef.current !== "undefined" &&

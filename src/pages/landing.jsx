@@ -15,20 +15,7 @@ function Landing() {
              <img className=' w-100 rounded-3xl'  src='https://www.searchenginejournal.com/wp-content/uploads/2020/07/how-to-generate-structured-data-automatically-using-computer-vision-5f06c03959da0.png'/>
           </div>
      </div>
-     <div className='flex my-28 justify-evenly rounded-3xl'>
-          <div className='bg-black rounded-3xl text-white p-10'>
-               <Link to={'/detect'}>  Object Detection</Link>
-          </div>
-          <div className='bg-black p-10 rounded-3xl text-white'>
-               <p> Pose Estimation </p>
-          </div>
-          <div className='bg-black rounded-3xl'>
-               <p className='p-10 text-white'> Object Detection</p>
-          </div>
-          <div className='bg-black p-10 rounded-3xl text-white'>
-               <p> Pose Estimation </p>
-          </div>
-     </div>
+   
     </>
   )
 }
