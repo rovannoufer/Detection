@@ -1,11 +1,13 @@
 import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, Navigate, useNavigate } from 'react-router-dom'
 import Detect from '../components/detect'
 import { UserAuth } from './Authcontext'
 
 function Header() {
 
   const {user, logOut } = UserAuth();
+  const navigate = useNavigate();
+
 
   const handleSignOut =async () =>{
         try{
@@ -13,6 +15,11 @@ function Header() {
         }catch(err){
           console.log(err);
         }
+  }
+
+  const handleSignIn =() =>{
+       
+    navigate('/signin');
   }
 
   return (
@@ -26,7 +33,7 @@ function Header() {
              <NavLink to={'/detect'} className='mr-5 p-2'> Object Detection </NavLink>
               <NavLink  to={'/pose'} className=' mr-5 p-2'> Pose Estimation </NavLink>
               <NavLink  to={'/handpose'}  className=' mr-5 p-2'> Hand Pose </NavLink>
-              { user?.displayName ? <button onClick={ handleSignOut }> SignOut </button> : <NavLink to={'/signin'}> SignIn </NavLink>}
+              { user ? <button onClick={ handleSignOut }> SignOut </button> : <button onClick={ handleSignIn }> SignIn </button> }
          </div>
 
          

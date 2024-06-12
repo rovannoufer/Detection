@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import InputBox from '../components/inputbox'
 import { faUser, faEnvelope, faKey  } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from './Authcontext';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../js/firebase';
 
 function Signup({type}) {
+
+  const authForm = useRef();
 
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
@@ -20,12 +24,57 @@ function Signup({type}) {
 
   useEffect(()=>{
     if(user!=null){
-      navigate('/');
+      navigate('/signin');
     }
   },[user])
 
+  const signupHandleSubmit= async (e) =>{
+    e.preventDefault();
+    let form = new FormData(authForm.current);
+
+    let formData ={};
+    for(let [key, value] of form.entries()){
+      formData[key] = value;
+    }
+    
+    let { email , password } = formData;
+
+    try{
+      const user = await createUserWithEmailAndPassword(auth,email,password);
+      console.log(user);
+      navigate('/')
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  const signInHandleSubmit= async (e) =>{
+    e.preventDefault();
+    let form = new FormData(authForm.current);
+
+    let formData ={};
+    for(let [key, value] of form.entries()){
+      formData[key] = value;
+    }
+    
+    let { email , password } = formData;
+
+    try{
+      const user = await signInWithEmailAndPassword(auth,email,password);
+      navigate('/')
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+
+
+
+
   return (
-         <div className=' px-60 my-44'>
+         <>
+           <form ref={ authForm }>
+           <div className=' px-60 my-44'>
               <h1 className='text-3xl capitalize text-center mb-24'> 
                 {type === "sign-in" ? "Welcome back" : "Join us today"}
               </h1>
@@ -36,6 +85,7 @@ function Signup({type}) {
                  type="text"
                  placeholder="Full name"
                  icon= {faUser}
+                 
                 />
                 : " "
               }
@@ -53,12 +103,25 @@ function Signup({type}) {
                  icon= { faKey }
                 />
 
-                <button className='whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80 block mx-auto mt-14'
-                type="submit"
-                > 
-                   { type.replace("-", " ")}
-                </button>
+             
 
+                {
+                 type !== "sign-in" ? 
+                 <button className='whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80 block mx-auto mt-14'
+                 type="submit" onClick={signupHandleSubmit}
+                 > 
+                    { type.replace("-", " ")}
+                 </button> 
+
+                 : 
+                 
+                 <button className='whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80 block mx-auto mt-14'
+                 type="submit" onClick={signInHandleSubmit}
+                 > 
+                    { type.replace("-", " ")}
+                 </button>
+
+                }
 
                 <div className='relative w-full flex items-center gap-2
                 my-10 opacity-10 uppercase text-black font-bold'>
@@ -93,6 +156,10 @@ function Signup({type}) {
                 }
 
         </div>
+
+           </form>
+         
+         </>
   )
 }
 

@@ -17,8 +17,8 @@ function App() {
               <Route path='/' element={<Home /> }>
                     <Route path='/' element={<Landing /> }/>
                     <Route path='/detect' element={ <ProtectedRoute> <Detect /> </ProtectedRoute>}/>
-                    <Route path='/pose' element={<Pose /> }/>
-                    <Route path='/handpose' element={<HandPose /> }/>
+                    <Route path='/pose' element={ <ProtectedRoute> <Pose /> </ProtectedRoute> }/>
+                    <Route path='/handpose' element={<ProtectedRoute> <HandPose /> </ProtectedRoute> }/>
                     
                     {/* <Route path='signup' element={ <UserAuth type = "sign-up"/> }/> */}
               </Route>
